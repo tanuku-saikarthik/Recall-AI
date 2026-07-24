@@ -22,18 +22,30 @@ This repository contains a full-stack, local-first retrieval system built with P
 
 ## 💡 Quick Start
 
-### 1. Setup
-1. Clone the repository and install dependencies:
+### 1. Setup from Scratch
+If you are setting this up on a new laptop (or after deleting the folder), run these commands in Powershell:
+
+1. **Clone the repository:**
+   ```powershell
+   git clone https://github.com/tanuku-saikarthik/Recall-AI.git
+   cd Recall-AI
+   ```
+2. **Create and activate a virtual environment:**
+   ```powershell
+   python -m venv venv
+   .\venv\Scripts\activate
+   ```
+3. **Install dependencies:**
    ```powershell
    pip install -r requirements.txt
    ```
-2. Copy the example environment file:
+4. **Configure your environment:**
    ```powershell
-   cp .env.example .env
+   Copy-Item .env.example .env
    ```
-   *(Optional) Edit `.env` to change your server port or tweak max file sizes.*
+   *(Optional: You can open `.env` in Notepad to change the web server port or max file limits).*
 
-### 2. The Premium Web UI
+### 2. Run the App
 The easiest and most beautiful way to interact with your data.
 1. Start the server:
    ```powershell
