@@ -57,26 +57,47 @@ class IncrementalIndexer(FileSystemEventHandler):
             self.indexer.process_file(filepath, folder_path)
             self.indexer.db.save_faiss()
 
-def start_watcher(db: DatabaseManager):
-    indexer = Indexer(db)
-    event_handler = IncrementalIndexer(indexer)
-    observer = Observer()
-    
-    for folder_path in event_handler.folders:
-        if os.path.exists(folder_path):
-            observer.schedule(event_handler, folder_path, recursive=True)
-            logger.info(f"Watching folder: {folder_path}")
-        else:
-            logger.warning(f"Cannot watch non-existent folder: {folder_path}")
-            
-    if not event_handler.folders:
-        logger.warning("No folders to watch.")
-        return
+class BackgroundWatcher:
+    def __init__(self, indexer: Indexer):
+        self.indexer = indexer
+        self.event_handler = IncrementalIndexer(indexer)
+        self.observer = Observer()
+        self.is_running = False
 
-    observer.start()
+    def start(self):
+        if self.is_running:
+            return
+        for folder_path in self.event_handler.folders:
+            if os.path.exists(folder_path):
+                self.observer.schedule(self.event_handler, folder_path, recursive=True)
+                logger.info(f"Watching folder: {folder_path}")
+        self.observer.start()
+        self.is_running = True
+        logger.info("Background watcher started.")
+
+    def stop(self):
+        if self.is_running:
+            self.observer.stop()
+            self.observer.join()
+            self.is_running = False
+            logger.info("Background watcher stopped.")
+
+    def watch_new_folder(self, folder_path: str, ignore_patterns: list):
+        if folder_path not in self.event_handler.folders:
+            self.event_handler.folders[folder_path] = {
+                'ignore_patterns': ignore_patterns
+            }
+            if self.is_running and os.path.exists(folder_path):
+                self.observer.schedule(self.event_handler, folder_path, recursive=True)
+                logger.info(f"Dynamically started watching new folder: {folder_path}")
+
+def start_watcher(db: DatabaseManager):
+    """Legacy entrypoint for CLI"""
+    indexer = Indexer(db)
+    watcher = BackgroundWatcher(indexer)
+    watcher.start()
     try:
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
-        observer.stop()
-    observer.join()
+        watcher.stop()

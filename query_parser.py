@@ -18,12 +18,11 @@ class QueryParser:
             "pdf": ".pdf",
             "ppt": ".pptx",
             "presentation": ".pptx",
-            "script": ".py",
-            "code": ".py",
+            "python script": ".py",
             "doc": ".docx",
             "report": ".docx",
             "excel": ".xlsx",
-            "sheet": ".xlsx"
+            "spreadsheet": ".xlsx"
         }
         
     def parse(self, query: str):
@@ -35,14 +34,14 @@ class QueryParser:
         }
         
         # 1. Rule-based file type extraction
-        words = query.lower().split()
-        for word in words:
-            for hint, ext in self.type_mappings.items():
-                if hint in word:
-                    parsed["file_type_hint"] = ext
-                    # naive topic reduction
-                    parsed["topic"] = parsed["topic"].lower().replace(word, "").strip()
-                    break
+        # 1. Rule-based file type extraction
+        lower_query = query.lower()
+        for hint, ext in self.type_mappings.items():
+            if hint in lower_query:
+                parsed["file_type_hint"] = ext
+                # naive topic reduction
+                parsed["topic"] = lower_query.replace(hint, "").strip()
+                break
 
         # 2. Rule-based date extraction
         # A simple approach: use dateparser on the whole query to see if a date pops out.

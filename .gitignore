@@ -27,5 +27,9 @@ vectors.faiss
 Thumbs.db
 *.swp
 
+# Local Test Data
+test_robust/
+benchmark_data/
+
 # Logs
 *.log

@@ -20,17 +20,28 @@ This repository contains a full-stack, local-first retrieval system built with P
 
 ---
 
-## 💡 What can you do with this?
+## 💡 Quick Start
 
-### 1. The Premium Web UI
+### 1. Setup
+1. Clone the repository and install dependencies:
+   ```powershell
+   pip install -r requirements.txt
+   ```
+2. Copy the example environment file:
+   ```powershell
+   cp .env.example .env
+   ```
+   *(Optional) Edit `.env` to change your server port or tweak max file sizes.*
+
+### 2. The Premium Web UI
 The easiest and most beautiful way to interact with your data.
 1. Start the server:
    ```powershell
    python -m uvicorn app:app --port 8000
    ```
 2. Open your browser to `http://localhost:8000`.
-3. Click the **⚙️ Settings** icon in the top right to add local folders to your watch-list.
-4. Click **Run Background Scan**.
+3. Click the **⚙️ Settings** icon in the top right and add a local folder to your watch-list.
+4. **Magic Sync:** The moment you add a folder, it automatically extracts, chunks, and embeds your files in the background! Furthermore, any future changes you make to files in those folders are synced in real-time.
 5. Use the central search bar to ask conceptual questions (e.g., *"What were the budget constraints for the Q4 marketing campaign?"*).
 
 ### 2. The Command-Line Interface (CLI)

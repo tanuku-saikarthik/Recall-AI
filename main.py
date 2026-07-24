@@ -1,5 +1,6 @@
 import argparse
 import os
+import sys
 import logging
 from datetime import datetime
 from db import DatabaseManager
@@ -76,11 +77,14 @@ def main():
             return
             
         for i, res in enumerate(results):
-            print(f"\n--- Result {i+1} ---")
-            print(f"File: {res['filename']} (Score: {res['score']:.4f})")
+            print(f"--- Result {i+1} ---")
+            print(f"File: {os.path.basename(res['path'])} (Score: {res['score']:.4f})")
             print(f"Path: {res['path']}")
             print(f"Page/Slide: {res['page']}")
-            print(f"Preview:\n{res['chunk_text']}\n")
+            
+            # Safely print on Windows cp1252 consoles without crashing on unicode characters
+            safe_text = res['chunk_text'].encode(sys.stdout.encoding or 'utf-8', errors='replace').decode(sys.stdout.encoding or 'utf-8')
+            print(f"Preview:\n{safe_text}\n")
 
 if __name__ == "__main__":
     main()
