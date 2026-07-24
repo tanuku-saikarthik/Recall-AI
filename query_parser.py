@@ -50,12 +50,9 @@ class QueryParser:
         # To avoid false positives on normal words, we might just use Ollama if rule-based is ambiguous.
         
         # Fallback to Ollama if topic seems empty or we couldn't parse well
+        # If Ollama is not running, the fallback handles the connection error gracefully.
         if not parsed["file_type_hint"] and len(parsed["topic"]) > 0:
-            # For this simple v1, we just return the query as topic
-            pass
-            
-        # Example of Ollama fallback (can be invoked if rule-based fails)
-        # parsed = self._fallback_ollama(query)
+            parsed = self._fallback_ollama(query)
         
         return parsed
 
