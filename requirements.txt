@@ -1,0 +1,13 @@
+sentence-transformers
+ollama
+fastapi
+uvicorn
+faiss-cpu
+PyMuPDF
+python-docx
+python-pptx
+openpyxl
+watchdog
+dateparser
+python-dotenv
+requests

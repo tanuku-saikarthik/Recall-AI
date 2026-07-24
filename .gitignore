@@ -1,0 +1,31 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+ENV/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Database and Vector Indexes
+metadata.db
+metadata.db-wal
+metadata.db-shm
+vectors.faiss
+*.sqlite3
+
+# Environment Variables
+.env
+.env.local
+
+# IDE and OS Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# Logs
+*.log

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal File Retrieval Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Settings Modal/Overlay -->
+        <div id="settings-overlay" class="overlay hidden">
+            <div class="modal">
+                <div class="modal-header">
+                    <h2>Manage Folders</h2>
+                    <button id="close-settings" class="btn-icon">&times;</button>
+                </div>
+                <div class="modal-content">
+                    <div class="input-group">
+                        <input type="text" id="new-folder-path" placeholder="C:\Users\Name\Documents...">
+                        <button id="add-folder-btn" class="btn-primary">Add Folder</button>
+                    </div>
+                    <ul id="folder-list" class="folder-list">
+                        <!-- Folders injected here -->
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button id="run-scan-btn" class="btn-secondary">Run Background Scan</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Search View -->
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">✨</span>
+                    <h1>File Assistant</h1>
+                </div>
+                <button id="open-settings" class="btn-icon" title="Settings">⚙️</button>
+            </div>
+        </header>
+
+        <main>
+            <div id="search-container" class="search-container center-state">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="What are you looking for?" autocomplete="off" autofocus>
+                    <button id="search-btn" class="btn-search">Search</button>
+                </div>
+                <div id="search-status" class="status-message"></div>
+            </div>
+
+            <div id="results-container" class="results-grid hidden">
+                <!-- Results injected here -->
+            </div>
+        </main>
+    </div>
+    <script src="/static/app.js"></script>
+</body>
+</html>
